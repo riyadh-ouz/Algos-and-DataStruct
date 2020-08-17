@@ -1,4 +1,4 @@
-#include "d_struct.h"
+#include "sort_algos.h"
 #include <iostream>
 //#include <conio.h>
 #include <ctime>
