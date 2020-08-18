@@ -106,6 +106,39 @@ void tri_insertion(int T[], int premier, int dernier) {
 	}
 }
 
+void fusion(int T[], int premier, int milieu, int dernier) {
+
+	int* gauche = new int[milieu - premier + 1]; // Le milieu est inclu dans la partie gauche
+	// Copie du demi-tableau gauche
+	for (int i = premier; i <= milieu; i++) gauche[i - premier] = T[i];
+
+	int i = premier,
+		j = 0,
+		k = milieu + 1;
+	
+	for (; j <= (milieu - premier) && k <= dernier; i++)
+		if (gauche[j] <= T[k]) T[i] = gauche[j++];
+		else T[i] = T[k++];
+
+	while (j <= milieu - premier) T[i++] = gauche[j++];
+
+	while (k <= dernier) T[i++] = T[k++];
+
+	delete[] gauche;
+}
+
+void tri_fusion_tableau_pre(int T[], int premier, int dernier) {
+	if (premier >= dernier) return;
+	int milieu = (premier + dernier) / 2;
+	tri_fusion_tableau_pre(T, premier, milieu);
+	tri_fusion_tableau_pre(T, milieu + 1, dernier);
+	fusion(T, premier, milieu, dernier);
+}
+
+void tri_fusion_tableau(int T[], int taille) {
+	return tri_fusion_tableau_pre(T, 0, taille - 1);
+}
+
 int partitionner(int T[], int premier, int dernier) {
 	int j = premier, i, x;
 	for (i = premier; i < dernier; i++)
