@@ -458,3 +458,72 @@ Element* liste_elements_DFS(Arbre* arbre) {
 	return liste;
 }
 
+Element* liste_elements_DFS_bis(Arbre* arbre) {
+	Element* liste_elements = NULL;
+
+	stack<Arbre*> pile_elements; // File de couche
+	pile_elements.push(arbre);
+
+	while (!pile_elements.empty()) {
+
+		liste_elements = cons(pile_elements.top()->info, liste_elements);
+
+		Arbre* a = pile_elements.top()->enfant;
+
+		pile_elements.pop();
+
+		for (; a != NULL; a = a->frere) pile_elements.push(a);
+
+	}
+
+	return liste_elements;
+}
+
+File* liste_elements_BFS(Arbre* arbre) {
+
+	File* liste_elements = initialise_file();
+
+	queue<Arbre*> file_elements; // File de couche
+	file_elements.push(arbre);
+
+	while (!file_elements.empty()) {
+
+		enfiler(liste_elements, file_elements.front()->info);
+
+		Arbre* a = file_elements.front()->enfant;
+
+		file_elements.pop();
+
+		for (; a != NULL; a = a->frere) file_elements.push(a);
+
+	}
+
+	return liste_elements;
+}
+
+void liste_elements_BFS_bis(Arbre* arbre) {
+
+	queue<Arbre*> a, b;
+	a.push(arbre);
+	int d = 1;
+
+	do {
+
+		while (!b.empty()) {
+			a.push(b.front());
+			b.pop();
+		}
+
+		cout << "\nCouche: " << d++ << endl;
+
+		while (!a.empty()) {
+
+			cout << (char)a.front()->info << endl;
+
+			for (Arbre* i = a.front()->enfant; i != NULL; i = i->frere) b.push(i);
+
+			a.pop();
+		}
+
+	} while (!b.empty());
+}

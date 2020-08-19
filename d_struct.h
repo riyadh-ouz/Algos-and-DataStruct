@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <stack>
+#include <queue>
 
 // Listes
 typedef struct Element Element;
@@ -128,4 +130,8 @@ struct Arbre {
 
 int taille_arbre(Arbre* arbre);
 int hauteur_arbre(Arbre* arbre);
-Element* liste_elements_DFS(Arbre* arbre);
+Element* liste_elements_DFS(Arbre* arbre); // DFS récusive
+Element* liste_elements_DFS_bis(Arbre* arbre); // Avec une pile
+
+File* liste_elements_BFS(Arbre* arbre); // BFS Avec une file
+void liste_elements_BFS_bis(Arbre* arbre); // BFS avec deux files representant des couches
