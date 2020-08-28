@@ -1,4 +1,7 @@
 #pragma once
+#ifndef D_STRUCT_H
+#define D_STRUCT_H
+
 #include <string>
 #include <stack>
 #include <queue>
@@ -130,8 +133,62 @@ struct Arbre {
 
 int taille_arbre(Arbre* arbre);
 int hauteur_arbre(Arbre* arbre);
-Element* liste_elements_DFS(Arbre* arbre); // DFS récusive
+Element* liste_elements_DFS(Arbre* arbre); // DFS avec récursivité
 Element* liste_elements_DFS_bis(Arbre* arbre); // Avec une pile
 
 File* liste_elements_BFS(Arbre* arbre); // BFS Avec une file
 void liste_elements_BFS_bis(Arbre* arbre); // BFS avec deux files representant des couches
+
+// Entre DFS et BFS
+/*
+	Compléxité en temps: DFS O(N), BFS O(N) ***
+	Compléxité en mémoire: DFS O(H), BFS O(L) ***
+
+	*** Pour la compléxité en temps les deux parcours visitent les noeuds de
+		l'arbre une seule fois, avec quelques opérations avant et après ( ajout,
+		l'enleve d'un element ...) reste en temps constant;
+	*** H: désigne la hauteur de l'arbre, DFS stocke le parcours dans une
+		pile, (en DFS avec pile, ou meme DFS récursive sachant que la récursivité
+		stocke les appels des fonctions en une pile "callstack");
+		L: désigne la plus grande largeur d'une arbre;
+		==> dans le pire des cas la compléxité en mémoire est de O(N);
+	*** Le DFS répond aux questions " le nombre total..., la liste des elements,
+		le plus long chemin..." et le BFS répond aux "le noeud le plus proches 
+		que ..., la plus petite distance qui...";
+
+*/
+
+
+
+// Arbres binaires de recherche
+typedef struct Noeud Noeud;
+struct Noeud {
+	int info;
+	Noeud* droite;
+	Noeud* gauche;
+};
+
+
+void noeud_inserer(Noeud** arbre,int x);
+int noeud_taille(Noeud* arbre);
+bool noeud_rechercher(Noeud* arbre, int x);
+void noeud_afficher(Noeud* arbre);
+void noeud_afficher_inverse(Noeud* arbre);
+void noeud_liberer(Noeud** arbre);
+
+
+
+// Tas
+typedef struct {
+	int capacite, taille;
+	int* T;
+} Tas;
+
+Tas* tas_initialiser(int capacite);
+void tas_liberer(Tas* tas);
+void tas_inserer(Tas* tas, int val);
+// Cette fonction est juste pour reorganiser le tas apres insertion
+void tas_reorganiser(Tas* tas);
+void tas_afficher(Tas* tas);
+
+#endif // !D_STRUCT_H

@@ -468,6 +468,8 @@ Element* liste_elements_DFS_bis(Arbre* arbre) {
 
 		liste_elements = cons(pile_elements.top()->info, liste_elements);
 
+		cout << (char)pile_elements.top()->info;
+
 		Arbre* a = pile_elements.top()->enfant;
 
 		pile_elements.pop();
@@ -526,4 +528,120 @@ void liste_elements_BFS_bis(Arbre* arbre) {
 		}
 
 	} while (!b.empty());
+}
+
+
+
+// Arbres binaires de recherche
+
+void noeud_inserer(Noeud** arbre, int x) {
+
+	Noeud* nouveau = new Noeud;
+	if (!nouveau) exit(EXIT_FAILURE);
+
+	else {
+		nouveau->info = x;
+		nouveau->gauche = NULL;
+		nouveau->droite = NULL;
+		
+		Noeud* tempArbre = *arbre,
+			* tempNoeud = NULL;
+		if (tempArbre) {
+			do {
+				tempNoeud = tempArbre;
+
+				if (x <= tempArbre->info) {
+					tempArbre = tempArbre->gauche;
+					if (!tempArbre) tempNoeud->gauche = nouveau;
+				}
+				else {
+					tempArbre = tempArbre->droite;
+					if (!tempArbre) tempNoeud->droite = nouveau;
+				}
+			} while (tempArbre);
+		}
+		else *arbre = nouveau;
+	}
+}
+
+int noeud_taille(Noeud* arbre) {
+	if (!arbre) return 0;
+	return 1 + noeud_taille(arbre->gauche) + noeud_taille(arbre->droite);
+}
+
+bool noeud_rechercher(Noeud* arbre, int x) {
+	while (arbre) {
+		if (arbre->info == x) return true;
+		else if (x <= arbre->info) arbre = arbre->gauche;
+		else arbre = arbre->droite;
+	}
+	return false;
+}
+
+void noeud_afficher(Noeud* arbre) {
+	if (!arbre) return;
+	noeud_afficher(arbre->gauche);
+	cout << "\n" << arbre->info;
+	noeud_afficher(arbre->droite);
+}
+
+void noeud_afficher_inverse(Noeud* arbre) {
+	if (!arbre) return;
+	noeud_afficher_inverse(arbre->droite);
+	cout << "\n" << arbre->info;
+	noeud_afficher_inverse(arbre->gauche);
+}
+
+void noeud_liberer(Noeud** arbre) {
+	if (!(*arbre)) return;
+	noeud_liberer(&(*arbre)->gauche);
+	noeud_liberer(&(*arbre)->droite);
+	delete* arbre;
+	*arbre = NULL;
+}
+
+
+// Tas
+
+Tas* tas_initialiser(int capacite) {
+	Tas* tas = new Tas;
+	if (!tas) return NULL;
+	tas->capacite = capacite;
+	tas->T = new int[capacite];
+	tas->taille = 0;
+	return tas;
+}
+
+void tas_liberer(Tas* tas) {
+	delete[] tas->T;
+	tas->taille = 0;
+}
+
+void tas_inserer(Tas* tas, int x) {
+	if (!tas) exit(EXIT_FAILURE);
+	tas->T[tas->taille] = x;
+	tas->taille++;
+	tas_reorganiser(tas);
+}
+
+void tas_reorganiser(Tas* tas) {
+	if (tas->taille == 0) return;
+
+	int location = tas->taille,
+		i_parent = (location - 1) / 2,
+		temp;
+	while (location && tas->T[location] > tas->T[i_parent]) {
+		temp = tas->T[location];
+		tas->T[location] = tas->T[i_parent];
+		tas->T[i_parent] = temp;
+
+		location = i_parent;
+		i_parent = (location - 1) / 2;
+	}
+
+}
+
+void tas_afficher(Tas* tas) {
+	for (int i = 0; i <= tas->taille; i++)
+		cout << tas->T[i] << endl;
 }

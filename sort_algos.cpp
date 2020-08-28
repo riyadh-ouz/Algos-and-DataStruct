@@ -163,3 +163,60 @@ void tri_rapide(int T[], int premier, int dernier) {
 	}
 }
 
+// Avec des Arbres
+
+// tri d'un tableau avec une ABR
+void ABR_vers_tableau(Noeud* ABR, int T[], int taille) {
+	static int i = 0;
+	if (i >= taille || !ABR) return;
+	ABR_vers_tableau(ABR->gauche, T, taille);
+	T[i] = ABR->info;
+	i++;
+	ABR_vers_tableau(ABR->droite, T, taille);
+}
+
+void tri_ABR(int T[], int dernier, int premier) {
+	Noeud* ABR = NULL;
+
+	for (int i = premier; i <= dernier; i++) noeud_inserer(&ABR, T[i]);
+
+	ABR_vers_tableau(ABR, T, dernier - premier + 1);
+
+	noeud_liberer(&ABR);
+}
+
+
+// tri d'un tableau avec un tas
+
+void reorganise_tas(int T[], int n, int i) {
+	int max = i,
+		gauche = 2 * i + 1,
+		droit = 2 * i + 2,
+		x;
+
+	if (gauche < n && T[gauche] > T[max]) max = gauche;
+	if (droit < n && T[droit] > T[max]) max = droit;
+
+	if (max != i) {
+		x = T[max];
+		T[max] = T[i];
+		T[i] = x;
+		reorganise_tas(T, n, max);
+	}
+
+}
+void initialise_tas(int T[], int n) {
+	// Le dernier élément qui n'a pas d'enfants est d'indice n / 2 - 1;
+	// On commence de ce dernier on organise chaque sous arbre (sous tas);
+	for (int i = n / 2 - 1; i >= 0; i--) reorganise_tas(T, n, i);
+}
+void tri_tas(int T[], int n) {
+	initialise_tas(T, n);
+	int x;
+	for (int i = n - 1; i >= 0; i--) {
+		x = T[i];
+		T[i] = T[0];
+		T[0] = x;
+		reorganise_tas(T, i, 0);
+	}
+}
