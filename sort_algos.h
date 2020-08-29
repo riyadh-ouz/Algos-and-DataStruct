@@ -41,6 +41,15 @@ void tri_ABR(int T[], int dernier, int premier = 0);
 	et 2*i+2 l'indice du fils droit;
 	** Aussi si i est l'indice d'un élément alors (i-1)/2 soit l'indice du parent;
 	** Note l'existence de MAX-Heap & MIN-heap, selon la racine est ses enfants;
+	** Complexité en temps O(nlog(n)):
+		1- La hauteur d'une arbre binaire complete de n element est log(n) et comme
+		"heapify" pousse la racine (dans le pire des cas jusqu'à ce qu'il devient
+		une feuille) donc O(log(n)) pour "heapify";
+		2- Durant la phase de l'initialisation on appelle "heapify" n/2 fois donc n/2log(n)
+		ce qui donne ~ O(nlog(n))
+		3- idem pour la phase de tri nlog(n)
+		4- Alors nlog(n) + nlog(n) ~ O(nlog(n))
+	** Complexité en mémoire O(1) tri sur place;
 */
 
 void reorganise_tas(int T[], int n, int i); // heapify en anglais

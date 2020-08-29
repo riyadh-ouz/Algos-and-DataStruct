@@ -206,8 +206,8 @@ void reorganise_tas(int T[], int n, int i) {
 
 }
 void initialise_tas(int T[], int n) {
-	// Le dernier élément qui n'a pas d'enfants est d'indice n / 2 - 1;
-	// On commence de ce dernier on organise chaque sous arbre (sous tas);
+	// Le dernier élément qui n'est pas une feuille (n'a pas d'enfants) est d'indice n / 2 - 1;
+	// On commence de ce dernier on organise chaque sous arbre (sous tas) jusqu'à la racine;
 	for (int i = n / 2 - 1; i >= 0; i--) reorganise_tas(T, n, i);
 }
 void tri_tas(int T[], int n) {
@@ -217,6 +217,7 @@ void tri_tas(int T[], int n) {
 		x = T[i];
 		T[i] = T[0];
 		T[0] = x;
+		// On décremente la taille à chaque appel
 		reorganise_tas(T, i, 0);
 	}
 }
