@@ -627,7 +627,7 @@ void tas_inserer(Tas* tas, int x) {
 void tas_reorganiser(Tas* tas) {
 	if (tas->taille == 0) return;
 
-	int location = tas->taille,
+	int location = tas->taille - 1,
 		i_parent = (location - 1) / 2,
 		temp;
 	while (location && tas->T[location] > tas->T[i_parent]) {
@@ -642,6 +642,6 @@ void tas_reorganiser(Tas* tas) {
 }
 
 void tas_afficher(Tas* tas) {
-	for (int i = 0; i <= tas->taille; i++)
+	for (int i = 0; i < tas->taille; i++)
 		cout << tas->T[i] << endl;
 }
