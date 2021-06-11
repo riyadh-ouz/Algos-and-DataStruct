@@ -2,10 +2,69 @@
 #include <iostream>
 #include <ctime>
 
+#define MAX 11
+
 using namespace std;
 
 int main()
 {
+    
+    // Passage spirale d'une matrice
+
+    int M[MAX][MAX], n, m, i, j, i_min, i_max, j_min, j_max, inc;
+
+    // La taille
+    n = 11;
+    m = 11;
+
+    // Lecture de la matrice (99 partout)
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+             M[i][j] = 99;
+
+
+    // On specifie le point de départ
+    i_min = 0; i_max = 3;
+    j_min = 0; j_max = 3;
+
+    inc = -1; // specifier le sens de passage
+    
+    int counter = 10;
+    
+    i = (inc == 1)? i_min : i_max;
+    j = (inc == 1)? j_min : j_max;
+    
+    // Boucle principale
+    while (i_min <= i_max && j_min <= j_max) {
+
+        for (; j_min <= j && j <= j_max; j+= inc) M[i][j] = counter++;
+
+        j -= inc;
+        i += inc;
+
+        i_min += (inc > 0);
+        i_max -= (inc < 0);
+
+        for (; i_min <= i && i <= i_max; i+= inc) M[i][j] = counter++;
+
+        i -= inc;
+        j -= inc;
+
+        j_min += (inc < 0);
+        j_max -= (inc > 0);
+
+        inc *= -1;
+        
+    }
+
+    // Affichage
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++)
+            cout << M[i][j] << " ";
+        cout << "\n";
+    }
+    
+
     /*
     int T[100];
 
