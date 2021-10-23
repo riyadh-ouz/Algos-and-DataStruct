@@ -106,6 +106,27 @@ void tri_insertion(int T[], int premier, int dernier) {
 	}
 }
 
+void tri_shell(int T[], int premier, int dernier) {
+
+	int h = (dernier - premier + 1) / 2,
+		j, tmp;
+
+	while (h > 0) {
+
+		for (int i = h; i <= dernier; i++) {
+			j = i;
+			tmp = T[i];
+			while (j >= h && T[j - h] > tmp) {
+				T[j] = T[j - h];
+				j -= h;
+			}
+			T[j] = tmp;
+		}
+
+		h /= 2;
+	}
+}
+
 void fusion(int T[], int premier, int milieu, int dernier) {
 
 	int* gauche = new int[milieu - premier + 1]; // Le milieu est inclu dans la partie gauche

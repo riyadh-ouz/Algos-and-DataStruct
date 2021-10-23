@@ -20,6 +20,8 @@ Element* tri_fusion_liste(Element* liste);
 void tri_selection(int T[], int premier, int dernier);
 void tri_insertion(int T[], int premier, int dernier);
 
+void tri_shell(int T[], int premier, int dernier);
+
 void fusion(int T[], int premier, int milieu, int dernier);
 void tri_fusion_tableau_pre(int T[], int premier, int dernier);
 void tri_fusion_tableau(int T[], int taille);
